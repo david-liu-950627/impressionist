@@ -22,7 +22,7 @@ module Impressionist
 
     def include_orm
       require "#{root}/app/models/impressionist/impressionable.rb"
-      require "impressionist/models/#{orm}/impression.rb"
+      require "impressionist/models/#{orm}/impressionist/impression.rb"
       require "impressionist/models/#{orm}/impressionist/impressionable.rb"
     end
 

@@ -1,12 +1,10 @@
 module Impressionist
-
   module Impressionable
-
-  # extends AS::Concern
-  include Impressionist::IsImpressionable
+    # extends AS::Concern
+    include Impressionist::IsImpressionable
   end
-
 end
 
-ActiveRecord::Base.
-send(:include, Impressionist::Impressionable)
+ActiveSupport.on_load(:active_record) do
+  include Impressionist::Impressionable
+end

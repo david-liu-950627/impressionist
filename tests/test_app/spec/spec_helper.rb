@@ -17,11 +17,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f|
 }
 
 RSpec.configure do |config|
-
-  # in order to pass tags(symbols) as true values
-  # you need to tell rspec to do so by
-  config.treat_symbols_as_metadata_keys_with_true_values = true
-
   config.mock_with :rspec
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -40,4 +35,11 @@ RSpec.configure do |config|
     Rails.logger
   end
 
+  config.before(type: :feature) do
+    self.default_url_options[:host] = 'test.host'
+  end
+
+  config.before(type: :controller) do
+    request.host = 'test.host'
+  end
 end

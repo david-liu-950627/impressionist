@@ -1,28 +1,28 @@
 require 'spec_helper'
 
-describe PostsController do
+describe PostsController, type: :controller  do
   it "should log impression at the action level" do
-    get "show", :id=> 1
-    Impression.all.size.should eq 12
-    Impression.last.controller_name.should eq "posts"
-    Impression.last.action_name.should eq "show"
-    Impression.last.impressionable_type.should eq "Post"
-    Impression.last.impressionable_id.should eq 1
+    get "show", params: { id: 1 }
+    expect(Impression.all.size).to eq 12
+    expect(Impression.last.controller_name).to eq "posts"
+    expect(Impression.last.action_name).to eq "show"
+    expect(Impression.last.impressionable_type).to eq "Post"
+    expect(Impression.last.impressionable_id).to eq 1
   end
 
   it "should log the user_id if user is authenticated (current_user helper method)" do
     session[:user_id] = 123
-    get "show", :id=> 1
-    Post.first.impressions.last.user_id.should eq 123
+    get "show", params: { id: 1 }
+    expect(Post.first.impressions.last.user_id).to eq 123
   end
 
   it "should log impression at the action level with params" do
-    get "show", id: 1, checked: true
-    Impression.all.size.should eq 12
-    Impression.last.params.should eq({"checked"=>true})
-    Impression.last.controller_name.should eq "posts"
-    Impression.last.action_name.should eq "show"
-    Impression.last.impressionable_type.should eq "Post"
-    Impression.last.impressionable_id.should eq 1
+    get "show", params: { id: 1, checked: true }
+    expect(Impression.all.size).to eq 12
+    expect(Impression.last.params).to eq({"checked"=>"true"})
+    expect(Impression.last.controller_name).to eq "posts"
+    expect(Impression.last.action_name).to eq "show"
+    expect(Impression.last.impressionable_type).to eq "Post"
+    expect(Impression.last.impressionable_id).to eq 1
   end
 end

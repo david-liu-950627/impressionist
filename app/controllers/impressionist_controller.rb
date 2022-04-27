@@ -51,7 +51,7 @@ module ImpressionistController
 
     # creates a statment hash that contains default values for creating an impression via an AR relation.
     def associative_create_statement(query_params={})
-      filter = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
+      filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
       query_params.reverse_merge!(
         :controller_name => controller_name,
         :action_name => action_name,
@@ -137,8 +137,8 @@ module ImpressionistController
       # # that broke the database query for uniqueness. not sure if this is a testing only issue.
       # str = request.session_options[:id]
       # logger.debug "Encoding: #{str.encoding.inspect}"
-      # # request.session_options[:id].encode("ISO-8859-1")
-      request.session_options[:id]
+      # # request.session_options[:id].encode("ISO-8859-1")r
+      request.session.id
     end
 
     def params_hash
