@@ -133,11 +133,7 @@ module ImpressionistController
     end
 
     def session_hash
-      # # careful: request.session_options[:id] encoding in rspec test was ASCII-8BIT
-      # # that broke the database query for uniqueness. not sure if this is a testing only issue.
-      # str = request.session_options[:id]
-      # logger.debug "Encoding: #{str.encoding.inspect}"
-      # # request.session_options[:id].encode("ISO-8859-1")r
+      request.session.send(:load!) unless request.session.loaded?
       request.session.id
     end
 
